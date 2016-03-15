@@ -5,14 +5,87 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{7d37500f-c776-427e-a0ac-b76f51f77b4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PhysFS-uwp.cpp" />
-    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="src\src\archiver_dir.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\archiver_grp.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\archiver_hog.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\archiver_iso9660.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\archiver_lzma.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\archiver_mvl.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\archiver_qpak.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\archiver_slb.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\archiver_unpacked.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\archiver_wad.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\archiver_zip.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\physfs.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\physfs_byteorder.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\physfs_unicode.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\platform_beos.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\platform_macosx.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\platform_posix.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\platform_unix.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\platform_windows.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\src\platform_winrt.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PhysFS-uwp.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="src\src\physfs.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\src\physfs_casefolding.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\src\physfs_internal.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\src\physfs_miniz.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\src\physfs_platforms.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
