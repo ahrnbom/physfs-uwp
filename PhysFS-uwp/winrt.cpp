@@ -134,7 +134,6 @@ static DWORD(WINAPI *pFormatMessageW)
 static HANDLE(WINAPI *pCreateFileW)
 (LPCWSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE);
 
-
 /*
 * Fallbacks for missing Unicode functions on Win95/98/ME. These are filled
 *  into the function pointers if looking up the real Unicode entry points
@@ -255,7 +254,6 @@ static HANDLE WINAPI fallbackCreateFileW(LPCWSTR fname,
 	return(retval);
 } /* fallbackCreateFileW */
 
-
 #if (PHYSFS_MINIMUM_GCC_VERSION(3,3))
 typedef FARPROC __attribute__((__may_alias__)) PHYSFS_FARPROC;
 #else
@@ -288,19 +286,19 @@ static int findApiSymbols(void)
 	/* Apparently Win9x HAS the Unicode entry points, they just don't WORK. */
 	/*  ...so don't look them up unless we're on NT+. (see osHasUnicode.) */
 
-	libUserEnv = LoadLibraryA("userenv.dll");
+	libUserEnv = LoadPackagedLibrary(L"userenv.dll", 0);
 	dll = (HMODULE)libUserEnv;
 	if (dll != NULL)
 		LOOKUP_NOFALLBACK(GetUserProfileDirectoryW, osHasUnicode);
 
 	/* !!! FIXME: what do they call advapi32.dll on Win64? */
-	libAdvApi32 = LoadLibraryA("advapi32.dll");
+	libAdvApi32 = LoadPackagedLibrary(L"advapi32.dll", 0);
 	dll = (HMODULE)libAdvApi32;
 	if (dll != NULL)
 		LOOKUP(GetUserNameW, osHasUnicode);
 
 	/* !!! FIXME: what do they call kernel32.dll on Win64? */
-	libKernel32 = LoadLibraryA("kernel32.dll");
+	libKernel32 = LoadPackagedLibrary(L"kernel32.dll", 0);
 	dll = (HMODULE)libKernel32;
 	if (dll != NULL)
 	{
@@ -512,16 +510,7 @@ static BOOL mediaInDrive(const char *drive)
 
 void __PHYSFS_platformDetectAvailableCDs(PHYSFS_StringCallback cb, void *data)
 {
-	/* !!! FIXME: Can CD drives be non-drive letter paths? */
-	/* !!! FIXME:  (so can they be Unicode paths?) */
-	char drive_str[4] = "x:\\";
-	char ch;
-	for (ch = 'A'; ch <= 'Z'; ch++)
-	{
-		drive_str[0] = ch;
-		if (GetDriveType(drive_str) == DRIVE_CDROM && mediaInDrive(drive_str))
-			cb(data, drive_str);
-	} /* for */
+	
 } /* __PHYSFS_platformDetectAvailableCDs */
 
 
