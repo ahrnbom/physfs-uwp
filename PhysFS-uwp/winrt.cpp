@@ -1,9 +1,9 @@
 /*
-* Windows support routines for PhysicsFS.
+* Windows RT support routines for PhysicsFS.
 *
 * Please see the file LICENSE.txt in the source's root directory.
 *
-*  This file written by Ryan C. Gordon, and made sane by Gregory S. Read.
+*  This file written by Ryan C. Gordon, and made sane by Gregory S. Read, and modified for Windows RT by Martin Ahrnbom.
 */
 
 #define __PHYSICSFS_INTERNAL__
@@ -133,25 +133,6 @@ static DWORD(WINAPI *pFormatMessageW)
 (DWORD, LPCVOID, DWORD, DWORD, LPWSTR, DWORD, va_list *);
 static HANDLE(WINAPI *pCreateFileW)
 (LPCWSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE);
-
-/*
-* Fallbacks for missing Unicode functions on Win95/98/ME. These are filled
-*  into the function pointers if looking up the real Unicode entry points
-*  in the system DLLs fails, so they're never used on WinNT/XP/Vista/etc.
-* They make an earnest effort to convert to/from UTF-8 and UCS-2 to
-*  the user's current codepage.
-*/
-
-static BOOL WINAPI fallbackGetUserNameW(LPWSTR buf, LPDWORD len)
-{
-	const DWORD cplen = *len;
-	char *cpstr = (char*)__PHYSFS_smallAlloc(cplen);
-	BOOL retval = GetUserNameA(cpstr, len);
-	if (buf != NULL)
-		MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, cpstr, cplen, buf, *len);
-	__PHYSFS_smallFree(cpstr);
-	return(retval);
-} /* fallbackGetUserNameW */
 
 static DWORD WINAPI fallbackFormatMessageW(DWORD dwFlags, LPCVOID lpSource,
 	DWORD dwMessageId, DWORD dwLangId,
@@ -301,8 +282,8 @@ static int findApiSymbols(void)
 	/* !!! FIXME: what do they call advapi32.dll on Win64? */
 	libAdvApi32 = LoadPackagedLibrary(L"advapi32.dll", 0);
 	dll = (HMODULE)libAdvApi32;
-	if (dll != NULL)
-		LOOKUP(GetUserNameW, osHasUnicode);
+	//if (dll != NULL)
+	//	LOOKUP(GetUserNameW, osHasUnicode);
 
 	/* !!! FIXME: what do they call kernel32.dll on Win64? */
 	libKernel32 = LoadPackagedLibrary(L"kernel32.dll", 0);
