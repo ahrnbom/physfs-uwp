@@ -708,7 +708,8 @@ void __PHYSFS_platformEnumerateFiles(const char *dirname,
 		if (cp != NULL)
 		{
 			WideCharToMultiByte(CP_ACP, 0, wSearchPath, len, cp, len, 0, 0);
-			dir = FindFirstFileA(cp, &ent);
+			//dir = FindFirstFileA(cp, &ent);
+			dir = FindFirstFileExA(cp, FindExInfoStandard, &ent, FindExSearchNameMatch, NULL, 0);
 			__PHYSFS_smallFree(cp);
 		} /* if */
 	} /* else */
@@ -937,10 +938,7 @@ int __PHYSFS_platformMkDir(const char *path)
   */
 static int getOSInfo(void)
 {
-	OSVERSIONINFO osVerInfo;     /* Information about the OS */
-	osVerInfo.dwOSVersionInfoSize = sizeof(osVerInfo);
-	BAIL_IF_MACRO(!GetVersionEx(&osVerInfo), winApiStrError(), 0);
-	osHasUnicode = (osVerInfo.dwPlatformId != VER_PLATFORM_WIN32_WINDOWS);
+	osHasUnicode = 1;
 	return(1);
 } /* getOSInfo */
 
