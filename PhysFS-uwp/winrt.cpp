@@ -1023,7 +1023,9 @@ void *__PHYSFS_platformOpenAppend(const char *filename)
 	if (retval != NULL)
 	{
 		HANDLE h = ((WinApiFile *)retval)->handle;
-		DWORD rc = SetFilePointer(h, 0, NULL, FILE_END);
+		//DWORD rc = SetFilePointer(h, 0, NULL, FILE_END);
+		const LARGE_INTEGER zero = { 0 };
+		DWORD rc = SetFilePointerEx(h, zero, NULL, FILE_END);
 		if (rc == PHYSFS_INVALID_SET_FILE_POINTER)
 		{
 			const char *err = winApiStrError();
@@ -1033,7 +1035,8 @@ void *__PHYSFS_platformOpenAppend(const char *filename)
 		} /* if */
 	} /* if */
 
-	return(retval);
+	return retval;
+
 } /* __PHYSFS_platformOpenAppend */
 
 
@@ -1088,87 +1091,61 @@ PHYSFS_sint64 __PHYSFS_platformWrite(void *opaque, const void *buffer,
 int __PHYSFS_platformSeek(void *opaque, PHYSFS_uint64 pos)
 {
 	HANDLE Handle = ((WinApiFile *)opaque)->handle;
-	LONG HighOrderPos;
-	PLONG pHighOrderPos;
-	DWORD rc;
+	BOOL rc;
 
-	/* Get the high order 32-bits of the position */
-	HighOrderPos = HIGHORDER_UINT64(pos);
+	LARGE_INTEGER li;
+	li.LowPart = LOWORDER_UINT64(pos);
+	li.HighPart = HIGHORDER_UINT64(pos);
 
-	/*
-	* MSDN: "If you do not need the high-order 32 bits, this
-	*         pointer must be set to NULL."
-	*/
-	pHighOrderPos = (HighOrderPos) ? &HighOrderPos : NULL;
+	rc = SetFilePointerEx(Handle, li, NULL, FILE_BEGIN);
 
-	/*
-	* !!! FIXME: MSDN: "Windows Me/98/95:  If the pointer
-	* !!! FIXME:  lpDistanceToMoveHigh is not NULL, then it must
-	* !!! FIXME:  point to either 0, INVALID_SET_FILE_POINTER, or
-	* !!! FIXME:  the sign extension of the value of lDistanceToMove.
-	* !!! FIXME:  Any other value will be rejected."
-	*/
-
-	/* Move pointer "pos" count from start of file */
-	rc = SetFilePointer(Handle, LOWORDER_UINT64(pos),
-		pHighOrderPos, FILE_BEGIN);
-
-	if ((rc == PHYSFS_INVALID_SET_FILE_POINTER) &&
-		(GetLastError() != NO_ERROR))
+	if (!rc && (GetLastError() != NO_ERROR))
 	{
-		BAIL_MACRO(winApiStrError(), 0);
+		return 0;
 	} /* if */
 
-	return(1);  /* No error occured */
+	return 1;  /* No error occured */
 } /* __PHYSFS_platformSeek */
 
 
 PHYSFS_sint64 __PHYSFS_platformTell(void *opaque)
 {
 	HANDLE Handle = ((WinApiFile *)opaque)->handle;
-	LONG HighPos = 0;
-	DWORD LowPos;
 	PHYSFS_sint64 retval;
+	BOOL rc;
 
-	/* Get current position */
-	LowPos = SetFilePointer(Handle, 0, &HighPos, FILE_CURRENT);
-	if ((LowPos == PHYSFS_INVALID_SET_FILE_POINTER) &&
-		(GetLastError() != NO_ERROR))
+	LARGE_INTEGER zero;
+	zero.QuadPart = 0;
+	LARGE_INTEGER out;
+
+	rc = SetFilePointerEx(Handle, zero, &out, FILE_CURRENT);
+	if (!rc)
 	{
-		BAIL_MACRO(winApiStrError(), -1);
+		return 0;
 	} /* if */
 	else
 	{
-		/* Combine the high/low order to create the 64-bit position value */
-		retval = (((PHYSFS_uint64)HighPos) << 32) | LowPos;
+		retval = out.QuadPart;
 		assert(retval >= 0);
 	} /* else */
 
-	return(retval);
+	return retval;
 } /* __PHYSFS_platformTell */
 
 
 PHYSFS_sint64 __PHYSFS_platformFileLength(void *opaque)
 {
 	HANDLE Handle = ((WinApiFile *)opaque)->handle;
-	DWORD SizeHigh;
-	DWORD SizeLow;
 	PHYSFS_sint64 retval;
 
-	SizeLow = GetFileSize(Handle, &SizeHigh);
-	if ((SizeLow == PHYSFS_INVALID_SET_FILE_POINTER) &&
-		(GetLastError() != NO_ERROR))
-	{
-		BAIL_MACRO(winApiStrError(), -1);
-	} /* if */
-	else
-	{
-		/* Combine the high/low order to create the 64-bit position value */
-		retval = (((PHYSFS_uint64)SizeHigh) << 32) | SizeLow;
+	FILE_STANDARD_INFO file_info = { 0 };
+	const BOOL res = GetFileInformationByHandleEx(Handle, FileStandardInfo, &file_info, sizeof(file_info));
+	if (res) {
+		retval = file_info.EndOfFile.QuadPart;
 		assert(retval >= 0);
-	} /* else */
+	}
 
-	return(retval);
+	return retval;
 } /* __PHYSFS_platformFileLength */
 
 
