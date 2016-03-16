@@ -184,8 +184,15 @@ static DWORD WINAPI fallbackGetFileAttributesW(LPCWSTR fname)
 	const int buflen = (int)(wStrLen(fname) + 1);
 	char *cpstr = (char *)__PHYSFS_smallAlloc(buflen);
 	WideCharToMultiByte(CP_ACP, 0, fname, buflen, cpstr, buflen, NULL, NULL);
-	retval = GetFileAttributesA(cpstr);
+	//retval = GetFileAttributesA(cpstr);
+	const BOOL res = GetFileAttributesExA(cpstr, GetFileExInfoStandard, &retval);
 	__PHYSFS_smallFree(cpstr);
+
+	if (!res) 
+	{
+		return 0;
+	}
+
 	return(retval);
 } /* fallbackGetFileAttributesW */
 
@@ -248,8 +255,8 @@ static HANDLE WINAPI fallbackCreateFileW(LPCWSTR fname,
 	const int buflen = (int)(wStrLen(fname) + 1);
 	char *cpstr = (char *)__PHYSFS_smallAlloc(buflen);
 	WideCharToMultiByte(CP_ACP, 0, fname, buflen, cpstr, buflen, NULL, NULL);
-	retval = CreateFileA(cpstr, dwDesiredAccess, dwShareMode, lpSecurityAttrs,
-		dwCreationDisposition, dwFlagsAndAttrs, hTemplFile);
+	//retval = CreateFileA(cpstr, dwDesiredAccess, dwShareMode, lpSecurityAttrs, dwCreationDisposition, dwFlagsAndAttrs, hTemplFile);
+	retval = CreateFile2(fname, dwDesiredAccess, dwShareMode, dwCreationDisposition, NULL);
 	__PHYSFS_smallFree(cpstr);
 	return(retval);
 } /* fallbackCreateFileW */
