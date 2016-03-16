@@ -438,45 +438,12 @@ static int determineUserDir(void)
 	if (userDir != NULL)
 		return(1);  /* already good to go. */
 
-					/*
-					* GetUserProfileDirectoryW() is only available on NT 4.0 and later.
-					*  This means Win95/98/ME (and CE?) users have to do without, so for
-					*  them, we'll default to the base directory when we can't get the
-					*  function pointer. Since this is originally an NT API, we don't
-					*  offer a non-Unicode fallback.
-					*/
-	if (pGetUserProfileDirectoryW != NULL)
-	{
-		HANDLE accessToken = NULL;       /* Security handle to process */
-		HANDLE processHandle = GetCurrentProcess();
-		if (OpenProcessToken(processHandle, TOKEN_QUERY, &accessToken))
-		{
-			DWORD psize = 0;
-			WCHAR dummy = 0;
-			LPWSTR wstr = NULL;
-			BOOL rc = 0;
+	const wchar_t* path = Windows::Storage::ApplicationData::Current->LocalFolder->Path->Data();
+	wchar_t path2[1024];
+	wcscpy_s(path2, path);
+	wcscat_s(path2, L"\\");
 
-			/*
-			* Should fail. Will write the size of the profile path in
-			*  psize. Also note that the second parameter can't be
-			*  NULL or the function fails.
-			*/
-			rc = pGetUserProfileDirectoryW(accessToken, &dummy, &psize);
-			assert(!rc);  /* !!! FIXME: handle this gracefully. */
-			(void)rc;
-
-			/* Allocate memory for the profile directory */
-			wstr = (LPWSTR)__PHYSFS_smallAlloc(psize * sizeof(WCHAR));
-			if (wstr != NULL)
-			{
-				if (pGetUserProfileDirectoryW(accessToken, wstr, &psize))
-					userDir = unicodeToUtf8Heap(wstr);
-				__PHYSFS_smallFree(wstr);
-			} /* else */
-		} /* if */
-
-		CloseHandle(accessToken);
-	} /* if */
+	userDir = unicodeToUtf8Heap(path2);
 
 	if (userDir == NULL)  /* couldn't get profile for some reason. */
 	{
