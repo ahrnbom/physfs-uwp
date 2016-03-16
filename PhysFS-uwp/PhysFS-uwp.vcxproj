@@ -27,26 +27,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\src\archiver_dir.c" />
-    <ClCompile Include="src\src\archiver_grp.c" />
-    <ClCompile Include="src\src\archiver_hog.c" />
-    <ClCompile Include="src\src\archiver_iso9660.c" />
-    <ClCompile Include="src\src\archiver_lzma.c" />
-    <ClCompile Include="src\src\archiver_mvl.c" />
-    <ClCompile Include="src\src\archiver_qpak.c" />
-    <ClCompile Include="src\src\archiver_slb.c" />
-    <ClCompile Include="src\src\archiver_unpacked.c" />
-    <ClCompile Include="src\src\archiver_wad.c" />
-    <ClCompile Include="src\src\archiver_zip.c" />
-    <ClCompile Include="src\src\physfs.c" />
-    <ClCompile Include="src\src\physfs_byteorder.c" />
-    <ClCompile Include="src\src\physfs_unicode.c" />
-    <ClCompile Include="src\src\platform_beos.cpp" />
-    <ClCompile Include="src\src\platform_macosx.c" />
-    <ClCompile Include="src\src\platform_posix.c" />
-    <ClCompile Include="src\src\platform_unix.c" />
-    <ClCompile Include="src\src\platform_windows.c" />
-    <ClCompile Include="src\src\platform_winrt.cpp">
+    <ClCompile Include="src\archivers\dir.c" />
+    <ClCompile Include="src\archivers\grp.c" />
+    <ClCompile Include="src\archivers\hog.c" />
+    <ClCompile Include="src\archivers\lzma.c" />
+    <ClCompile Include="src\archivers\mvl.c" />
+    <ClCompile Include="src\archivers\qpak.c" />
+    <ClCompile Include="src\archivers\wad.c" />
+    <ClCompile Include="src\archivers\zip.c" />
+    <ClCompile Include="src\physfs.c" />
+    <ClCompile Include="src\physfs_byteorder.c" />
+    <ClCompile Include="src\physfs_unicode.c" />
+    <ClCompile Include="src\platform\beos.cpp" />
+    <ClCompile Include="src\platform\macosx.c" />
+    <ClCompile Include="src\platform\os2.c" />
+    <ClCompile Include="src\platform\pocketpc.c" />
+    <ClCompile Include="src\platform\posix.c" />
+    <ClCompile Include="src\platform\unix.c" />
+    <ClCompile Include="src\platform\windows.c" />
+    <ClCompile Include="src\zlib123\adler32.c" />
+    <ClCompile Include="src\zlib123\compress.c" />
+    <ClCompile Include="src\zlib123\crc32.c" />
+    <ClCompile Include="src\zlib123\deflate.c" />
+    <ClCompile Include="src\zlib123\gzio.c" />
+    <ClCompile Include="src\zlib123\infback.c" />
+    <ClCompile Include="src\zlib123\inffast.c" />
+    <ClCompile Include="src\zlib123\inflate.c" />
+    <ClCompile Include="src\zlib123\inftrees.c" />
+    <ClCompile Include="src\zlib123\trees.c" />
+    <ClCompile Include="src\zlib123\uncompr.c" />
+    <ClCompile Include="src\zlib123\zutil.c" />
+    <ClCompile Include="winrt.cpp">
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</CompileAsWinRT>
@@ -56,11 +67,23 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\src\physfs.h" />
-    <ClInclude Include="src\src\physfs_casefolding.h" />
-    <ClInclude Include="src\src\physfs_internal.h" />
-    <ClInclude Include="src\src\physfs_miniz.h" />
-    <ClInclude Include="src\src\physfs_platforms.h" />
+    <ClInclude Include="src\physfs.h" />
+    <ClInclude Include="src\physfs_casefolding.h" />
+    <ClInclude Include="src\physfs_internal.h" />
+    <ClInclude Include="src\physfs_platforms.h" />
+    <ClInclude Include="src\zlib123\crc32.h" />
+    <ClInclude Include="src\zlib123\deflate.h" />
+    <ClInclude Include="src\zlib123\inffast.h" />
+    <ClInclude Include="src\zlib123\inffixed.h" />
+    <ClInclude Include="src\zlib123\inflate.h" />
+    <ClInclude Include="src\zlib123\inftrees.h" />
+    <ClInclude Include="src\zlib123\trees.h" />
+    <ClInclude Include="src\zlib123\zconf.h" />
+    <ClInclude Include="src\zlib123\zlib.h" />
+    <ClInclude Include="src\zlib123\zutil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\zlib123\README" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{f5123206-d805-402e-a2ba-339548912c5c}</ProjectGuid>

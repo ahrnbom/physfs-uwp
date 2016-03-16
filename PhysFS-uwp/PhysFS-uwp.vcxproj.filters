@@ -8,84 +8,158 @@
     <Filter Include="src">
       <UniqueIdentifier>{7d37500f-c776-427e-a0ac-b76f51f77b4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\platform">
+      <UniqueIdentifier>{3bb2f923-fafb-49c9-82a3-53682154a8f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\zlib123">
+      <UniqueIdentifier>{5714ab0f-9dc4-418a-88eb-84079e888ae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="archivers">
+      <UniqueIdentifier>{4d3d7af7-a4b6-456d-b4df-c61149464048}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\src\archiver_dir.c">
+    <ClCompile Include="src\physfs.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\archiver_grp.c">
+    <ClCompile Include="src\physfs_byteorder.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\archiver_hog.c">
+    <ClCompile Include="src\physfs_unicode.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\archiver_iso9660.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\archivers\dir.c">
+      <Filter>archivers</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\archiver_lzma.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\archivers\grp.c">
+      <Filter>archivers</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\archiver_mvl.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\archivers\hog.c">
+      <Filter>archivers</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\archiver_qpak.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\archivers\lzma.c">
+      <Filter>archivers</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\archiver_slb.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\archivers\mvl.c">
+      <Filter>archivers</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\archiver_unpacked.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\archivers\qpak.c">
+      <Filter>archivers</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\archiver_wad.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\archivers\wad.c">
+      <Filter>archivers</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\archiver_zip.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\archivers\zip.c">
+      <Filter>archivers</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\physfs.c">
-      <Filter>src</Filter>
+    <ClCompile Include="winrt.cpp">
+      <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\physfs_byteorder.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\platform\windows.c">
+      <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\physfs_unicode.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\platform\unix.c">
+      <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\platform_beos.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\platform\posix.c">
+      <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\platform_macosx.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\platform\pocketpc.c">
+      <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\platform_posix.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\platform\os2.c">
+      <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\platform_unix.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\platform\macosx.c">
+      <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\platform_windows.c">
-      <Filter>src</Filter>
+    <ClCompile Include="src\platform\beos.cpp">
+      <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="src\src\platform_winrt.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\zlib123\adler32.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\compress.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\crc32.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\deflate.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\gzio.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\infback.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\inffast.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\inflate.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\inftrees.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\trees.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\uncompr.c">
+      <Filter>src\zlib123</Filter>
+    </ClCompile>
+    <ClCompile Include="src\zlib123\zutil.c">
+      <Filter>src\zlib123</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\src\physfs.h">
+    <ClInclude Include="src\physfs.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\src\physfs_casefolding.h">
+    <ClInclude Include="src\physfs_casefolding.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\src\physfs_internal.h">
+    <ClInclude Include="src\physfs_internal.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\src\physfs_miniz.h">
+    <ClInclude Include="src\physfs_platforms.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\src\physfs_platforms.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\zlib123\crc32.h">
+      <Filter>src\zlib123</Filter>
     </ClInclude>
+    <ClInclude Include="src\zlib123\deflate.h">
+      <Filter>src\zlib123</Filter>
+    </ClInclude>
+    <ClInclude Include="src\zlib123\inffast.h">
+      <Filter>src\zlib123</Filter>
+    </ClInclude>
+    <ClInclude Include="src\zlib123\inffixed.h">
+      <Filter>src\zlib123</Filter>
+    </ClInclude>
+    <ClInclude Include="src\zlib123\inflate.h">
+      <Filter>src\zlib123</Filter>
+    </ClInclude>
+    <ClInclude Include="src\zlib123\inftrees.h">
+      <Filter>src\zlib123</Filter>
+    </ClInclude>
+    <ClInclude Include="src\zlib123\trees.h">
+      <Filter>src\zlib123</Filter>
+    </ClInclude>
+    <ClInclude Include="src\zlib123\zconf.h">
+      <Filter>src\zlib123</Filter>
+    </ClInclude>
+    <ClInclude Include="src\zlib123\zlib.h">
+      <Filter>src\zlib123</Filter>
+    </ClInclude>
+    <ClInclude Include="src\zlib123\zutil.h">
+      <Filter>src\zlib123</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\zlib123\README">
+      <Filter>src\zlib123</Filter>
+    </None>
   </ItemGroup>
 </Project>
