@@ -488,26 +488,6 @@ static int determineUserDir(void)
 	return(1);  /* We made it: hit the showers. */
 } /* determineUserDir */
 
-
-static BOOL mediaInDrive(const char *drive)
-{
-	UINT oldErrorMode;
-	DWORD tmp;
-	BOOL retval;
-
-	/* Prevent windows warning message appearing when checking media size */
-	oldErrorMode = SetErrorMode(SEM_FAILCRITICALERRORS);
-
-	/* If this function succeeds, there's media in the drive */
-	retval = GetVolumeInformationA(drive, NULL, 0, NULL, NULL, &tmp, NULL, 0);
-
-	/* Revert back to old windows error handler */
-	SetErrorMode(oldErrorMode);
-
-	return(retval);
-} /* mediaInDrive */
-
-
 void __PHYSFS_platformDetectAvailableCDs(PHYSFS_StringCallback cb, void *data)
 {
 	
