@@ -354,59 +354,11 @@ static const char *winApiStrError(void)
 
 static char *getExePath(void)
 {
-	DWORD buflen = 64;
-	LPWSTR modpath = NULL;
-	char *retval = NULL;
-
-	while (1)
-	{
-		DWORD rc;
-		void *ptr;
-
-		if (!(ptr = allocator.Realloc(modpath, buflen*sizeof(WCHAR))))
-		{
-			allocator.Free(modpath);
-			BAIL_MACRO(ERR_OUT_OF_MEMORY, NULL);
-		} /* if */
-		modpath = (LPWSTR)ptr;
-
-		rc = pGetModuleFileNameW(NULL, modpath, buflen);
-		if (rc == 0)
-		{
-			allocator.Free(modpath);
-			BAIL_MACRO(winApiStrError(), NULL);
-		} /* if */
-
-		if (rc < buflen)
-		{
-			buflen = rc;
-			break;
-		} /* if */
-
-		buflen *= 2;
-	} /* while */
-
-	if (buflen > 0)  /* just in case... */
-	{
-		WCHAR *ptr = (modpath + buflen) - 1;
-		while (ptr != modpath)
-		{
-			if (*ptr == '\\')
-				break;
-			ptr--;
-		} /* while */
-
-		if ((ptr == modpath) && (*ptr != '\\'))
-			__PHYSFS_setError(ERR_GETMODFN_NO_DIR);
-		else
-		{
-			*(ptr + 1) = '\0';  /* chop off filename. */
-			retval = unicodeToUtf8Heap(modpath);
-		} /* else */
-	} /* else */
-	allocator.Free(modpath);
-
-	return(retval);   /* w00t. */
+	const wchar_t* path = Windows::ApplicationModel::Package::Current->InstalledLocation->Path->Data();
+	wchar_t path2[1024];
+	wcscpy_s(path2, path);
+	wcscat_s(path2, L"\\");
+	return unicodeToUtf8Heap(path2);
 } /* getExePath */
 
 
@@ -705,26 +657,11 @@ void __PHYSFS_platformEnumerateFiles(const char *dirname,
 
 char *__PHYSFS_platformCurrentDir(void)
 {
-	char *retval = NULL;
-	WCHAR *wbuf = NULL;
-	DWORD buflen = 0;
-
-	buflen = pGetCurrentDirectoryW(buflen, NULL);
-	wbuf = (WCHAR *)__PHYSFS_smallAlloc((buflen + 2) * sizeof(WCHAR));
-	BAIL_IF_MACRO(wbuf == NULL, ERR_OUT_OF_MEMORY, NULL);
-	pGetCurrentDirectoryW(buflen, wbuf);
-
-	if (wbuf[buflen - 2] == '\\')
-		wbuf[buflen - 1] = '\0';  /* just in case... */
-	else
-	{
-		wbuf[buflen - 1] = '\\';
-		wbuf[buflen] = '\0';
-	} /* else */
-
-	retval = unicodeToUtf8Heap(wbuf);
-	__PHYSFS_smallFree(wbuf);
-	return(retval);
+	const wchar_t* path = Windows::ApplicationModel::Package::Current->InstalledLocation->Path->Data();
+	wchar_t path2[1024];
+	wcscpy_s(path2, path);
+	wcscat_s(path2, L"\\");
+	return unicodeToUtf8Heap(path2);
 } /* __PHYSFS_platformCurrentDir */
 
 
