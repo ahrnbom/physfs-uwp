@@ -179,17 +179,16 @@ static DWORD WINAPI fallbackGetFileAttributesW(LPCWSTR fname)
 
 static DWORD WINAPI fallbackGetCurrentDirectoryW(DWORD buflen, LPWSTR buf)
 {
-	DWORD retval = 0;
-	char *cpbuf = NULL;
-	if (buf != NULL)
-		cpbuf = (char *)__PHYSFS_smallAlloc(buflen);
-	retval = GetCurrentDirectoryA(buflen, cpbuf);
-	if (cpbuf != NULL)
-	{
-		MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, cpbuf, retval, buf, buflen);
-		__PHYSFS_smallFree(cpbuf);
-	} /* if */
-	return(retval);
+	const wchar_t* path = Windows::ApplicationModel::Package::Current->InstalledLocation->Path->Data();
+	wchar_t path2[1024];
+	wcscpy_s(path2, path);
+	wcscat_s(path2, L"\\");
+	buf = path2;
+
+	int i;
+	for (i = 0; buf[i] != '\0'; ++i);
+
+	return i;
 } /* fallbackGetCurrentDirectoryW */
 
 static BOOL WINAPI fallbackRemoveDirectoryW(LPCWSTR dname)
