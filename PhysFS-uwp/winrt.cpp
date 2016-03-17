@@ -446,12 +446,12 @@ void *__PHYSFS_platformGetThreadID(void)
 
 static int doPlatformExists(LPWSTR wpath)
 {
-	BAIL_IF_MACRO
-		(
-			pGetFileAttributesW(wpath) == PHYSFS_INVALID_FILE_ATTRIBUTES,
-			winApiStrError(), 0
-			);
-	return(1);
+	WIN32_FILE_ATTRIBUTE_DATA a;
+
+	// Returns non-zero if successful
+	BOOL retval = GetFileAttributesExW(wpath, GetFileExInfoStandard, &a);
+
+	return(retval);
 } /* doPlatformExists */
 
 
