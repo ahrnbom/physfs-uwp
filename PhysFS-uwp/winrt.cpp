@@ -851,8 +851,9 @@ static void *doOpen(const char *fname, DWORD mode, DWORD creation, int rdonly)
 
 	UTF8_TO_UNICODE_STACK_MACRO(wfname, fname);
 	BAIL_IF_MACRO(wfname == NULL, ERR_OUT_OF_MEMORY, NULL);
-	fileHandle = pCreateFileW(wfname, mode, FILE_SHARE_READ | FILE_SHARE_WRITE,
-		NULL, creation, FILE_ATTRIBUTE_NORMAL, NULL);
+	/*fileHandle = pCreateFileW(wfname, mode, FILE_SHARE_READ | FILE_SHARE_WRITE,
+		NULL, creation, FILE_ATTRIBUTE_NORMAL, NULL);*/
+	fileHandle = CreateFile2(wfname, mode, FILE_SHARE_READ | FILE_SHARE_WRITE, creation, NULL);
 	__PHYSFS_smallFree(wfname);
 
 	BAIL_IF_MACRO
