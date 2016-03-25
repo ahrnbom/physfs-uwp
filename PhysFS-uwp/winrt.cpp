@@ -513,7 +513,13 @@ int __PHYSFS_platformIsDirectory(const char *fname)
 	LPWSTR wpath;
 	UTF8_TO_UNICODE_STACK_MACRO(wpath, fname);
 	BAIL_IF_MACRO(wpath == NULL, ERR_OUT_OF_MEMORY, 0);
-	retval = ((pGetFileAttributesW(wpath) & FILE_ATTRIBUTE_DIRECTORY) != 0);
+	//retval = ((pGetFileAttributesW(wpath) & FILE_ATTRIBUTE_DIRECTORY) != 0);
+	WIN32_FILE_ATTRIBUTE_DATA file_info;
+	const BOOL res = GetFileAttributesExW(wpath, GetFileExInfoStandard, &file_info);
+	if (res) {
+		retval = ((file_info.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0);
+	}
+
 	__PHYSFS_smallFree(wpath);
 	return(retval);
 } /* __PHYSFS_platformIsDirectory */
@@ -1061,7 +1067,15 @@ int __PHYSFS_platformClose(void *opaque)
 static int doPlatformDelete(LPWSTR wpath)
 {
 	/* If filename is a folder */
-	if (pGetFileAttributesW(wpath) & FILE_ATTRIBUTE_DIRECTORY)
+	int isdir = 0;
+	//if (pGetFileAttributesW(wpath) & FILE_ATTRIBUTE_DIRECTORY)
+	WIN32_FILE_ATTRIBUTE_DATA file_info;
+	const BOOL res = GetFileAttributesExW(wpath, GetFileExInfoStandard, &file_info);
+	if (res) {
+		isdir = (file_info.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY);
+	}
+
+	if (isdir)
 	{
 		BAIL_IF_MACRO(!pRemoveDirectoryW(wpath), winApiStrError(), 0);
 	} /* if */
